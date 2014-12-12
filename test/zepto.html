@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zepto unit tests</title>
+    <script src="../zepto.js"></script>
+    <script src="evidence.js"></script>
+</head>
+<body>
+
+<h1>Zepto unit tests</h1>
+<p>
+    See the browser console for results.
+</p>
+<div id="some_element"></div>
+<p>
+    <span class="yay"></span>
+    <span></span>
+    <span class="nay" id="nay"></span>
+</p>
+<script>
+    Evidence.TestCase.extend('Zepto', {
+
+        testDollar: function (t) {
+            t.assert($('#some_element').dom.length === 1);
+            t.assert($('#some_element').dom[0] === document.getElementById('some_element'));
+
+            t.assert($('span').dom.length === 3);
+            t.assert($('p>span.nay').dom.length === 1);
+        },
+
+        testChaining: function (t) {
+            t.assert(document.getElementById('nay').innerHTML === '');
+            $('span.nay').css('color:red').html('test');
+            t.assert(document.getElementById('nay').innerHTML === 'test');
+        }
+
+    });
+</script>
+
+</body>
+</html>

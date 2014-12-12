@@ -1,23 +1,20 @@
 var $ = function (selector) {
-    return {
-        dom: Array.prototype.slice.apply(document.querySelectorAll(selector)),
-        html: $.html,
-        css: $.css
-    };
+    $.dom = [].slice.apply(document.querySelectorAll(selector));
+    return $;
 };
 
 $.html = function (html) {
-    this.dom.forEach(function (el) {
+    $.dom.forEach(function (el) {
         el.innerHTML = html;
     });
 
-    return this;
+    return $;
 };
 
 $.css = function (style) {
-    this.dom.forEach(function (el) {
+    $.dom.forEach(function (el) {
         el.style.cssText += ';' + style;
     });
 
-    return this;
+    return $;
 };

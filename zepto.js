@@ -17,6 +17,7 @@ $.html = function (html) {
 $.css = function (style) {
     this.dom.forEach(function (el) {
         el.style.cssText += ';' + style;
-        return this;
     });
+
+    return this;
 };

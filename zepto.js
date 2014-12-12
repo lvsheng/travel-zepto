@@ -9,6 +9,9 @@ function $ (_) {
 }
 
 $.fn = {
+    get: function (index) {
+        return index === undefined ? $.dom : $.dom[index];
+    },
     html: function (html) {
         return $(function (el) {
             el.innerHTML = html;

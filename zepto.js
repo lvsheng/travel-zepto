@@ -2,6 +2,7 @@ function $ (_) {
     if (typeof _ === 'function') {
         $.dom.forEach(_);
     } else {
+        $._ = _;
         $.dom = [].slice.apply(document.querySelectorAll(_));
     }
 
@@ -31,6 +32,20 @@ $.fn = {
         return $(function (el) {
             el.style.cssText += ';' + style;
         });
+    },
+    live: function (event, callback) {
+        var selector = $._;
+        document.body.addEventListener(event, function (event) {
+            var target = event.target;
+            var nodes = [].slice.apply(document.querySelectorAll(selector));
+            while (target && nodes.indexOf(target) < 0) {
+                target = target.parentNode;
+            }
+
+            if (target && target !== document) {
+                callback.call(target, event);
+            }
+        }, false);
     }
 };
 

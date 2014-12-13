@@ -46,6 +46,8 @@ $.fn = {
                 callback.call(target, event);
             }
         }, false);
+
+        return $.fn;
     }
 };
 

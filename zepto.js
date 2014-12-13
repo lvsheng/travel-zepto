@@ -48,6 +48,12 @@ $.fn = {
         }, false);
 
         return $.fn;
+    },
+    anim: function (transform, opacity, dur) {
+        return $.fn.css(
+            'transition: all ' + (dur || 0.5) + 's;' +
+            'transform: ' + transform + '; opacity: ' + (opacity === 0 ? 0 : opacity || 1)
+        );
     }
 };
 

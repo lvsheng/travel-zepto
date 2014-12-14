@@ -37,6 +37,9 @@
 
             t.assert($('span').get().length === 3);
             t.assert($('p>span.nay').get().length === 1);
+
+            var el = document.getElementById("some_element");
+            t.assertEqual($(el).get(0), el);
         },
 
         testCss: function (t) {

@@ -55,7 +55,9 @@ var $ = (function (d) {
 
     for (k in ADJ_OPS)
         $.fn[k] = (function (op) {
-            return function (html) { return this(function (el) { el.insertAdjacentHTML(op,html) }) };
+            return function (html) { return this(function (el) {
+                el['insertAdjacent' + (html instanceof Element ? 'Element' : 'HTML')](op,html);
+            }) };
         })(ADJ_OPS[k]);
 
     function ajax (method, url, success) {

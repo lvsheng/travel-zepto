@@ -131,6 +131,34 @@
             t.assertEqual('plugin!', el.innerHTML);
         },
 
+        testAppendPrependBeforeAfter: function(t){
+            $('#beforeafter').append('append');
+            $('#beforeafter').prepend('prepend');
+            $('#beforeafter').before('before');
+            $('#beforeafter').after('after');
+
+            t.assertEqual('before<div id="beforeafter">prependappend</div>after', $('#beforeafter_container').html());
+
+            $('#beforeafter_container').html('<div id="beforeafter"></div>');
+
+            function div(contents){
+                var el = document.createElement('div');
+                el.innerHTML = contents;
+                return el;
+            }
+
+            $('#beforeafter').append(div('append'));
+            $('#beforeafter').prepend(div('prepend'));
+            $('#beforeafter').before(div('before'));
+            $('#beforeafter').after(div('after'));
+
+            t.assertEqual(
+                    '<div>before</div><div id="beforeafter"><div>prepend</div>'+
+                    '<div>append</div></div><div>after</div>',
+                    $('#beforeafter_container').html()
+            );
+        },
+
         testAddRemoveClass: function (t) {
             var el = $('#some_element').get(0);
 

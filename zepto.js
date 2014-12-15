@@ -12,14 +12,14 @@ var $ = (function (d) {
     function classRE (name) { return new RegExp("(^|\\s)" + name + "(\\s|$)") }
 
     $.fn = {
-        get: function (idx) { return idx === undefined ? this.dom : this.dom[idx]; },
+        get: function (idx) { return idx === void 0 ? this.dom : this.dom[idx]; },
         remove: function () { return this(function (el) { el.parentNode.removeChild(el) }) },
         each: function (callback) { return this(function (el) { callback(el) }) },
         html: function (html) {
-            return (html === undefined) ? this.dom[0].innerHTML : this(function (el) { el.innerHTML = html });
+            return (html === void 0) ? this.dom[0].innerHTML : this(function (el) { el.innerHTML = html });
         },
         attr: function (name, value) {
-            return (value === undefined) ? this.dom[0].getAttribute(name) || undefined :
+            return (value === void 0) ? this.dom[0].getAttribute(name) || void 0 :
                 this(function (el) { el.setAttribute(name, value) });
         },
         css: function (style) {

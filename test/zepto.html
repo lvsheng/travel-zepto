@@ -67,6 +67,8 @@
             t.assertEqual('yowza', $('div.htmltest').html());
 
             t.assertEqual('', $('#htmltest3').html());
+
+            t.assertNull($('doesnotexist').html());
         },
 
         testDelegate: function (t) {

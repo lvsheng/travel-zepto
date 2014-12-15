@@ -25,6 +25,9 @@ var $ = (function (d) {
         css: function (style) {
             return this(function (el) { el.style.cssText += ';' + style; });
         },
+        index: function (target) {
+            return this.dom.indexOf($(target).get(0));
+        },
         anim: function (transform, opacity, dur) {
             return this.css('transition: all ' + (dur || 0.5) + 's;' +
             'transform: ' + transform + '; opacity: ' + (opacity === 0 ? 0 : opacity || 1));

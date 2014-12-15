@@ -35,6 +35,11 @@ var $ = (function (d) {
             return this.css('transition: all ' + (dur || 0.5) + 's;' +
             'transform: ' + transform + '; opacity: ' + (opacity === 0 ? 0 : opacity || 1));
         },
+        bind: function (event, callback) {
+            return this(function (el) {
+                event.split(/\s+/).forEach(function (event) { el.addEventListener(event, callback, false) });
+            });
+        },
         delegate: function (selector, event, callback) {
             return this(function (el) {
                 el.addEventListener(event, function (event) {

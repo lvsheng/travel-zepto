@@ -16,7 +16,8 @@ var $ = (function (d) {
         remove: function () { return this(function (el) { el.parentNode.removeChild(el) }) },
         each: function (callback) { return this(function (el) { callback(el) }) },
         html: function (html) {
-                return this(function (el) { el.innerHTML = html; });
+            if (html === undefined) { return this.dom[0] ? this.dom[0].innerHTML : undefined }
+            else { return this(function (el) { el.innerHTML = html; }); }
         },
         attr: function (name, value) {
             if (value === undefined) { return this.dom[0].getAttribute(name) || undefined; }

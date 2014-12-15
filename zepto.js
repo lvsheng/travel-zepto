@@ -3,7 +3,7 @@ var $ = (function (d) {
         ADJ_OPS = {append: 'beforeEnd', prepend: 'afterBegin', before: 'beforeBegin', after: 'afterEnd'};
 
     function $ (_) {
-        function fn (_) { return arguments.callee.dom.forEach(_), arguments.callee; }
+        function fn (_) { return fn.dom.forEach(_), fn; }
         fn.dom = _ instanceof Element ? [_] : slice.call(d.querySelectorAll(fn.selector = _));
         for (var k in $.fn) { fn[k] = $.fn[k]; }
         return fn;

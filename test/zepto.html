@@ -26,6 +26,8 @@
 <div class="htmltest" id="htmltest2"></div>
 <div id="htmltest3"></div>
 
+<div id="beforeafter_container"><div id="beforeafter"></div></div>
+
 <script>
     function click (el) {
         var event = document.createEvent("MouseEvents");
@@ -106,6 +108,13 @@
 
             els.attr("data-id", 0);
             t.assertEqual("0", els.attr("data-id"));
+
+            t.assertNull($('doesnotexist').attr('yo'));
+
+            els.attr({ 'data-id': 'id', 'data-name': 'name' });
+            t.assertEqual('id', els.attr("data-id"));
+            t.assertEqual('name', els.attr("data-name"));
+            t.assertEqual('id', $('#attr_2').attr('data-id'));
         },
 
         testChaining: function (t) {

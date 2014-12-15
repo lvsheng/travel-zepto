@@ -16,11 +16,14 @@ var $ = (function (d) {
         remove: function () { return this(function (el) { el.parentNode.removeChild(el) }) },
         each: function (callback) { return this(function (el) { callback(el) }) },
         html: function (html) {
-            return (html === void 0) ? this.dom[0].innerHTML : this(function (el) { el.innerHTML = html });
+            return (html === void 0) ? (this.dom[0] ? this.dom[0].innerHTML : null) : this(function (el) { el.innerHTML = html });
         },
         attr: function (name, value) {
-            return (value === void 0) ? this.dom[0].getAttribute(name) || void 0 :
-                this(function (el) { el.setAttribute(name, value) });
+            return (typeof name === 'string' && value === void 0) ? (this.dom[0] ? this.dom[0].getAttribute(name) || undefined : null) :
+                this(function (el) {
+                    if (typeof name === 'object') for (k in name) el.setAttribute(k, name[k]);
+                    else el.setAttribute(name, value);
+                });
         },
         css: function (style) {
             return this(function (el) { el.style.cssText += ';' + style; });

@@ -1,5 +1,6 @@
 var $ = (function (d) {
     var slice = [].slice, k,
+        CN = 'className', AEL = 'addEventListener', PN = 'parentNode',
         ADJ_OPS = {append: 'beforeEnd', prepend: 'afterBegin', before: 'beforeBegin', after: 'afterEnd'};
 
     function $ (_, context) {
@@ -16,14 +17,14 @@ var $ = (function (d) {
 
     $.fn = {
         get: function (idx) { return idx === void 0 ? this.dom : this.dom[idx]; },
-        remove: function () { return this(function (el) { el.parentNode.removeChild(el) }) },
+        remove: function () { return this(function (el) { el[PN].removeChild(el) }) },
         each: function (callback) { return this(function (el) { callback(el) }) },
         find: function (selector) {
             return $(this.dom.map(function(el){ return elSelect(el, selector) }).reduce(function(a,b){ return a.concat(b) }, []));
         },
         closet: function (selector) {
-            var el = this.dom[0].parentNode, nodes = elSelect(d, selector);
-            while (el && nodes.indexOf(el)<0) el = el.parentNode;
+            var el = this.dom[0][PN], nodes = elSelect(d, selector);
+            while (el && nodes.indexOf(el)<0) el = el[PN];
             return $(el && !(el===d) ? el : []);
         },
         html: function (html) {
@@ -52,26 +53,26 @@ var $ = (function (d) {
         },
         bind: function (event, callback) {
             return this(function (el) {
-                event.split(/\s+/).forEach(function (event) { el.addEventListener(event, callback, false) });
+                event.split(/\s+/).forEach(function (event) { el[AEL](event, callback, false) });
             });
         },
         delegate: function (selector, event, callback) {
             return this(function (el) {
-                el.addEventListener(event, function (event) {
+                el[AEL](event, function (event) {
                     var target = event.target, nodes = slice.call(elSelect(el, selector));
-                    while (target && nodes.indexOf(target) < 0) { target = target.parentNode; }
+                    while (target && nodes.indexOf(target) < 0) { target = target[PN]; }
                     if (target && target !== el && target !== d) callback.call(target, event);
                 }, false)
             });
         },
         addClass: function (name) {
             return this(function (el) {
-                !classRE(name).test(el.className) && (el.className += (el.className ? ' ' : '') + name);
+                !classRE(name).test(el[CN]) && (el[CN] += (el[CN] ? ' ' : '') + name);
             });
         },
         removeClass: function (name) {
             return this(function (el) {
-                el.className = el.className.replace(classRE(name), ' ').replace(/^\s+|\s+$/g, '');
+                el[CN] = el[CN].replace(classRE(name), ' ').replace(/^\s+|\s+$/g, '');
             });
         }
     };

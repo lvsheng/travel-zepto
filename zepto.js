@@ -7,13 +7,13 @@ var $ = (function (d) {
         if (context !== void 0) return $(context).find(_);
         function fn (_) { return fn.dom.forEach(_), fn; }
         fn.dom = (typeof _ === 'function' && 'dom' in _) ?
-            _.dom : (_ instanceof Array ? _ : (_ instanceof Element ? [_] : slice.call(elSelect(document, fn.selector = _))));
+            _.dom : (_ instanceof Array ? _ : (_ instanceof Element ? [_] : elSelect(d, fn.selector = _)));
         for (var k in $.fn) { fn[k] = $.fn[k]; }
         return fn;
     }
 
     function classRE (name) { return new RegExp("(^|\\s)" + name + "(\\s|$)") }
-    function elSelect (el, selector) { return slice.call(el.querySelector(selector)) }
+    function elSelect (el, selector) { return slice.call(el.querySelectorAll(selector)) }
 
     $.fn = {
         get: function (idx) { return idx === void 0 ? this.dom : this.dom[idx]; },
@@ -59,7 +59,7 @@ var $ = (function (d) {
         delegate: function (selector, event, callback) {
             return this(function (el) {
                 el[AEL](event, function (event) {
-                    var target = event.target, nodes = slice.call(elSelect(el, selector));
+                    var target = event.target, nodes = elSelect(el, selector);
                     while (target && nodes.indexOf(target) < 0) { target = target[PN]; }
                     if (target && target !== el && target !== d) callback.call(target, event);
                 }, false)

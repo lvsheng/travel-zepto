@@ -18,22 +18,20 @@
 
         testAjaxGet: function(t){
             t.pause();
-            $.get('http://example.com/', function(response){
+            $.get('zepto.json', function(response){
                 t.resume(function(){
                     this.assert(response);
                 });
             });
         },
-
         testAjaxPost: function(t){
             t.pause();
-            $.post('http://example.com/', function(response){
+            $.post('zepto.json', function(response){
                 t.resume(function(){
                     this.assert(response);
                 });
             });
         },
-
         testAjaxGetJSON: function(t){
             t.pause();
             $.getJSON('zepto.json', function(data){
@@ -42,12 +40,10 @@
                 });
             });
         },
-
         testAjaxRequestHeader: function(t){
-// @see Net Panel/Resources
-// TODO
+            // @see Net Panel/Resources
+            // TODO
         }
-
     });
 </script>
 </body>

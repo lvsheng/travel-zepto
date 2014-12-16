@@ -5,7 +5,8 @@ var $ = (function (d) {
     function $ (_, context) {
         if (context !== void 0) return $(context).find(_);
         function fn (_) { return fn.dom.forEach(_), fn; }
-        fn.dom = (typeof _ === 'function' && 'dom' in _) ? _.dom : (_ instanceof Array ? _ : (_ instanceof Element ? [_] : slice.call(elSelect(document, fn.selector = _))));
+        fn.dom = (typeof _ === 'function' && 'dom' in _) ?
+            _.dom : (_ instanceof Array ? _ : (_ instanceof Element ? [_] : slice.call(elSelect(document, fn.selector = _))));
         for (var k in $.fn) { fn[k] = $.fn[k]; }
         return fn;
     }
@@ -19,6 +20,11 @@ var $ = (function (d) {
         each: function (callback) { return this(function (el) { callback(el) }) },
         find: function (selector) {
             return $(this.dom.map(function(el){ return elSelect(el, selector) }).reduce(function(a,b){ return a.concat(b) }, []));
+        },
+        closet: function (selector) {
+            var el = this.dom[0].parentNode, nodes = elSelect(d, selector);
+            while (el && nodes.indexOf(el)<0) el = el.parentNode;
+            return $(el && !(el===d) ? el : []);
         },
         html: function (html) {
             return (html === void 0) ? (this.dom[0] ? this.dom[0].innerHTML : null) : this(function (el) { el.innerHTML = html });

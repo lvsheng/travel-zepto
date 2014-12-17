@@ -94,7 +94,7 @@ var $ = (function (d) {
             }) };
         })(ADJ_OPS[k]);
 
-    ['swipeLeft', 'swipeRight', 'doubleTap', 'tap'].forEach(function (m) {
+    ['swipe', 'doubleTap', 'tap'].forEach(function (m) {
         $.fn[m] = function (callback) { return this.bind(m, callback) };
     });
 
@@ -120,8 +120,8 @@ var $ = (function (d) {
     d.ontouchend = function (e) {
         var t = e.target;
         if (t.x2 > 0) {
-            t.x2 - t.x1 > 30 && dispatch("swipeRight", t);
-            t.x2 - t.x1 < -30 && dispatch("swipeLeft", t);
+            t.x2 - t.x1 > 30 && dispatch("swipe", t);
+            t.x2 - t.x1 < -30 && dispatch("swipe", t);
             t.x2 = t.x1 = t.last = 0;
         } else if (t.last !== 0) {
             dispatch("tap", t);

@@ -27,8 +27,8 @@ var $ = (function (d) {
             while (el && nodes.indexOf(el)<0) el = el[PN];
             return $(el && !(el===d) ? el : []);
         },
-        show: function () { return this.css("display:none") },
-        hide: function () { return this.css("display:block") },
+        show: function () { return this.css("display:block") },
+        hide: function () { return this.css("display:none") },
         html: function (html) {
             return (html === void 0) ? (this.dom[0] ? this.dom[0].innerHTML : null) : this(function (el) { el.innerHTML = html });
         },

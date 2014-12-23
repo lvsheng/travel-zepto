@@ -1,7 +1,8 @@
 var $ = (function (d) {
     var slice = [].slice, k,
         CN = 'className', AEL = 'addEventListener', PN = 'parentNode', QSA = 'querySelectorAll',
-        ADJ_OPS = {append: 'beforeEnd', prepend: 'afterBegin', before: 'beforeBegin', after: 'afterEnd'};
+        ADJ_OPS = {append: 'beforeEnd', prepend: 'afterBegin', before: 'beforeBegin', after: 'afterEnd'},
+        touch = {}, touchTimeout, e;
 
     function $ (_, context) {
         if (context !== void 0) return $(context).find(_);
@@ -98,33 +99,32 @@ var $ = (function (d) {
         $.fn[m] = function (callback) { return this.bind(m, callback) };
     });
 
-    function dispatch (event, target) {
-        var e = d.createEvent('Events');
-        e.initEvent(event, true, false);
-        target.dispatchEvent(e);
-    }
+    function dispatch (event, target) { target.dispatchEvent(e = d.createEvent("Events"), e.initEvent(event, true, false)) }
 
     d.ontouchstart = function (e) {
-        var now = Date.now(), t = e.touches[0].target, delta = now - (t.last || now);
-        t.x1 = e.touches[0].pageX;
-        if (delta > 0 && delta <= 80) {
-            dispatch('doubleTap', t);
-            t.last = 0;
-        } else t.last = now;
+        var now = Date.now(), delta = now - (touch.last || now);
+        touch.target = e.touches[0].target;
+        if(touchTimeout) clearTimeout(touchTimeout);
+        touch.x1 = e.touches[0].pageX;
+        if (delta > 0 && delta <= 250) {
+            dispatch('doubleTap', touch.target);
+            touch = {};
+        } else touch.last = now;
     };
 
-    d.ontouchmove = function (e) {
-        e.touches[0].target.x2 = e.touches[0].pageX;
-    };
+    d.ontouchmove = function(e){ touch.x2 = e.touches[0].pageX };
 
     d.ontouchend = function (e) {
-        var t = e.target;
-        if (t.x2 > 0) {
-            t.x2 - t.x1 > 30 && dispatch("swipe", t);
-            t.x2 - t.x1 < -30 && dispatch("swipe", t);
-            t.x2 = t.x1 = t.last = 0;
-        } else if (t.last !== 0) {
-            dispatch("tap", t);
+        if (touch.x2 > 0) {
+            touch.x2 - touch.x1 > 30 && dispatch("swipe", touch.target);
+            touch.x2 - touch.x1 < -30 && dispatch("swipe", touch.target);
+            touch.x2 = touch.x1 = touch.target.last = 0;
+        } else if ('last' in touch) {
+            touchTimeout = setTimeout(function () {
+                touchTimeout = null;
+                dispatch("tap", touch.target);
+                touch = {};
+            }, 250);
         }
     };
 

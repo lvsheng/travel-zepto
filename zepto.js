@@ -117,8 +117,7 @@ var $ = (function (d) {
             dispatch('doubleTap', touch.target);
             touch = {};
         } else if (touch.x2 > 0) {
-            touch.x2 - touch.x1 > 30 && dispatch("swipe", touch.target);
-            touch.x2 - touch.x1 < -30 && dispatch("swipe", touch.target);
+            Math.abs(touch.x1 - touch.x2) > 30 && dispatch("swipe", touch.target);
             touch.x2 = touch.x1 = touch.last = 0;
         } else if ('last' in touch) {
             touchTimeout = setTimeout(function () {

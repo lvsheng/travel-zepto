@@ -119,7 +119,7 @@ var $ = (function (d) {
         } else if (touch.x2 > 0) {
             touch.x2 - touch.x1 > 30 && dispatch("swipe", touch.target);
             touch.x2 - touch.x1 < -30 && dispatch("swipe", touch.target);
-            touch.x2 = touch.x1 = touch.target.last = 0;
+            touch.x2 = touch.x1 = touch.last = 0;
         } else if ('last' in touch) {
             touchTimeout = setTimeout(function () {
                 touchTimeout = null;

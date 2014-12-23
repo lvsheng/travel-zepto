@@ -1,8 +1,9 @@
-var $ = (function (d) {
-    var slice = [].slice, k,
+var Zepto = (function () {
+    var slice = [].slice, d = document,
         CN = 'className', AEL = 'addEventListener', PN = 'parentNode', QSA = 'querySelectorAll',
         ADJ_OPS = {append: 'beforeEnd', prepend: 'afterBegin', before: 'beforeBegin', after: 'afterEnd'},
-        touch = {}, touchTimeout, e;
+        touch = {}, touchTimeout,
+        e, k;
 
     function $ (_, context) {
         if (context !== void 0) return $(context).find(_);
@@ -153,4 +154,6 @@ var $ = (function (d) {
     };
 
     return $;
-})(document);
+})();
+
+if (!('$' in window)) window.$ = Zepto;
